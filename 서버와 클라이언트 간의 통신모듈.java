@@ -9,34 +9,34 @@ import java.util.ArrayList;
 
 public class MultiChatServer {
 
-   // ¼­¹ö ¼ÒÄÏ°ú Å¬¶óÀÌ¾ğÆ® ¿¬°á ¼ÒÄÏ
+   // ì„œë²„ ì†Œì¼“ê³¼ í´ë¼ì´ì–¸íŠ¸ ì—°ê²° ì†Œì¼“
    private ServerSocket ss = null;
    private Socket s = null;
 
-   // ¿¬°áµÈ Å¬¶óÀÌ¾ğÆ® ½º·¹µå¸¦ °ü¸®ÇÏ´Â ArrayList
+   // ì—°ê²°ëœ í´ë¼ì´ì–¸íŠ¸ ìŠ¤ë ˆë“œë¥¼ ê´€ë¦¬í•˜ëŠ” ArrayList
    ArrayList <ChatThread> chatlist = new ArrayList 
                                                                 <ChatThread>( );
 
-   // ¸ÖÆ¼Ãª ¸ŞÀÎ ÇÁ·Î±×·¥ºÎ
+   // ë©€í‹°ì±— ë©”ì¸ í”„ë¡œê·¸ë¨ë¶€
    public void start( ) {
       try {
-         // ¼­¹ö ¼ÒÄÏ »ı¼º
+         // ì„œë²„ ì†Œì¼“ ìƒì„±
          ss = new ServerSocket(8888);
          System.out.println("server start");
 
-         // ¹«ÇÑ·çÇÁ¸¦ µ¹¸é¼­ Å¬¶óÀÌ¾ğÆ® ¿¬°áÀ» ±â´Ù¸²
+         // ë¬´í•œë£¨í”„ë¥¼ ëŒë©´ì„œ í´ë¼ì´ì–¸íŠ¸ ì—°ê²°ì„ ê¸°ë‹¤ë¦¼
          while(true) {
             s = ss.accept( );
-            // ¿¬°áµÈ Å¬¶óÀÌ¾ğÆ®¿¡¼­ ½º·¹µå Å¬·¡½º »ı¼º
+            // ì—°ê²°ëœ í´ë¼ì´ì–¸íŠ¸ì—ì„œ ìŠ¤ë ˆë“œ í´ë˜ìŠ¤ ìƒì„±
             ChatThread chat = new ChatThread( );
-            // Å¬¶óÀÌ¾ğÆ® ¸®½ºÆ® Ãß°¡
+            // í´ë¼ì´ì–¸íŠ¸ ë¦¬ìŠ¤íŠ¸ ì¶”ê°€
             chatlist.add(chat);
-            // ½º·¹µå ½ÃÀÛ
+            // ìŠ¤ë ˆë“œ ì‹œì‘
             chat.start( );
          }
       } catch(Exception e) {
          // System.out.println(e);
-         System.out.println("[MultiChatServer]start( )Exp ¹ß»ı!!");
+         System.out.println("[MultiChatServer]start( )Exp ë°œìƒ!!");
       }
    }
 
@@ -45,21 +45,21 @@ public class MultiChatServer {
       server.start( );
    }
 
-   // ¿¬°áµÈ ¸ğµç Å¬¶óÀÌ¾ğÆ®¿¡ ¸Ş½ÃÁö Áß°è
+   // ì—°ê²°ëœ ëª¨ë“  í´ë¼ì´ì–¸íŠ¸ì— ë©”ì‹œì§€ ì¤‘ê³„
    void msgSendAll(String msg) {
       for(ChatThread ct : chatlist) {
          ct.outMsg.println(msg);
       }
    }
 
-   // °¢ Å¬¶óÀÌ¾ğÆ® °ü¸®¸¦ À§ÇÑ ½º·¹µå Å¬·¡½º
+   // ê° í´ë¼ì´ì–¸íŠ¸ ê´€ë¦¬ë¥¼ ìœ„í•œ ìŠ¤ë ˆë“œ í´ë˜ìŠ¤
    class ChatThread extends Thread {
 
-      // ¼ö½Å ¸Ş½ÃÁö¿Í ÆÄ½Ì ¸Ş½ÃÁö Ã³¸®ÇÏ´Â º¯¼ö ¼±¾ğ
+      // ìˆ˜ì‹  ë©”ì‹œì§€ì™€ íŒŒì‹± ë©”ì‹œì§€ ì²˜ë¦¬í•˜ëŠ” ë³€ìˆ˜ ì„ ì–¸
       String msg;
       String[ ] rmsg;
 
-      // ÀÔ¡¤Ãâ·Â ½ºÆ®¸² »ı¼º
+      // ì…Â·ì¶œë ¥ ìŠ¤íŠ¸ë¦¼ ìƒì„±
       private BufferedReader inMsg = null;
       private PrintWriter outMsg = null;
 
@@ -68,42 +68,42 @@ public class MultiChatServer {
          boolean status = true;
          System.out.println("##ChatThread start...");
          try {
-            // ÀÔ¡¤Ãâ·Â ½ºÆ®¸² »ı¼º
+            // ì…Â·ì¶œë ¥ ìŠ¤íŠ¸ë¦¼ ìƒì„±
             inMsg = new BufferedReader
                   (new InputStreamReader(s.getInputStream( )));
             outMsg = new PrintWriter(s.getOutputStream( ), true);
 
-            // »óÅÂÁ¤º¸°¡ true¸é ·çÇÁ¸¦ µ¹¸é¼­ »ç¿ëÀÚÇÑÅ×¼­ ¼ö½ÅµÈ ¸Ş½ÃÁö Ã³¸®
+            // ìƒíƒœì •ë³´ê°€ trueë©´ ë£¨í”„ë¥¼ ëŒë©´ì„œ ì‚¬ìš©ìí•œí…Œì„œ ìˆ˜ì‹ ëœ ë©”ì‹œì§€ ì²˜ë¦¬
             while(status) {
-               // ¼ö½ÅµÈ ¸Ş½ÃÁö¸¦ msg º¯¼ö¿¡ ÀúÀå
+               // ìˆ˜ì‹ ëœ ë©”ì‹œì§€ë¥¼ msg ë³€ìˆ˜ì— ì €ì¥
                msg = inMsg.readLine( );
-               // ¡¯/¡¯ ±¸ºĞÀÚ¸¦ ±âÁØÀ¸·Î ¸Ş½ÃÁö¸¦ ¹®ÀÚ¿­ ¹è¿­·Î ÆÄ½Ì
+               // â€™/â€™ êµ¬ë¶„ìë¥¼ ê¸°ì¤€ìœ¼ë¡œ ë©”ì‹œì§€ë¥¼ ë¬¸ìì—´ ë°°ì—´ë¡œ íŒŒì‹±
                rmsg = msg.split("/");
 
-               // ÆÄ½ÌµÈ ¹®ÀÚ¿­ ¹è¿­ÀÇ µÎ ¹øÂ° ¿ä¼Ò°ª¿¡ µû¶ó Ã³¸®
-               // ·Î±×¾Æ¿ô ¸Ş½ÃÁöÀÏ ¶§
+               // íŒŒì‹±ëœ ë¬¸ìì—´ ë°°ì—´ì˜ ë‘ ë²ˆì§¸ ìš”ì†Œê°’ì— ë”°ë¼ ì²˜ë¦¬
+               // ë¡œê·¸ì•„ì›ƒ ë©”ì‹œì§€ì¼ ë•Œ
 if(rmsg[1].equals("logout")) {
                  chatlist.remove(this);
-                 msgSendAll("server/" + rmsg[0] + "´ÔÀÌ Á¾·áÇß½À´Ï´Ù.");
-                 // ÇØ´ç Å¬¶óÀÌ¾ğÆ® ½º·¹µå Á¾·á·Î status¸¦ false·Î ¼³Á¤
+                 msgSendAll("server/" + rmsg[0] + "ë‹˜ì´ ì¢…ë£Œí–ˆìŠµë‹ˆë‹¤.");
+                 // í•´ë‹¹ í´ë¼ì´ì–¸íŠ¸ ìŠ¤ë ˆë“œ ì¢…ë£Œë¡œ statusë¥¼ falseë¡œ ì„¤ì •
                  status = false;
               }
-              // ·Î±×ÀÎ ¸Ş½ÃÁöÀÏ ¶§
+              // ë¡œê·¸ì¸ ë©”ì‹œì§€ì¼ ë•Œ
               else if(rmsg[1].equals("login")) {
-                 msgSendAll("server/" + rmsg[0] + "´ÔÀÌ ·Î±×ÀÎÇß½À´Ï´Ù.");
+                 msgSendAll("server/" + rmsg[0] + "ë‹˜ì´ ë¡œê·¸ì¸í–ˆìŠµë‹ˆë‹¤.");
               }
-              // ±× ¹ÛÀÇ ÀÏ¹İ ¸Ş½ÃÁöÀÏ ¶§
+              // ê·¸ ë°–ì˜ ì¼ë°˜ ë©”ì‹œì§€ì¼ ë•Œ
               else {
                  msgSendAll(msg);
               }
-           } // while Á¾·á
-   // ·çÇÁ¸¦ ¹ş¾î³ª¸é Å¬¶óÀÌ¾ğÆ® ¿¬°áÀÌ Á¾·áµÇ¹Ç·Î ½º·¹µå ÀÎÅÍ·´Æ®µÊ
+           } // while ì¢…ë£Œ
+   // ë£¨í”„ë¥¼ ë²—ì–´ë‚˜ë©´ í´ë¼ì´ì–¸íŠ¸ ì—°ê²°ì´ ì¢…ë£Œë˜ë¯€ë¡œ ìŠ¤ë ˆë“œ ì¸í„°ëŸ½íŠ¸ë¨
            this.interrupt( );
            System.out.println("##" + this.getName( ) + "stop!!");
         } catch(IOException e) {
            chatlist.remove(this);
            // e.printStackTrace( );
-           System.out.println("[ChatThread]run( ) IOException ¹ß»ı!!");
+           System.out.println("[ChatThread]run( ) IOException ë°œìƒ!!");
         }
      }
   }
