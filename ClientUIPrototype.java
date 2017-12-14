@@ -25,154 +25,154 @@ public class MultiChatClient implements ActionListener, Runnable {
    private BufferedReader inMsg = null;
    private PrintWriter outMsg = null;
 
-   // ·Î±×ÀÎ ÆĞ³Î
+   // ë¡œê·¸ì¸ íŒ¨ë„
    private JPanel loginPanel;
-   // ·Î±×ÀÎ ¹öÆ°
+   // ë¡œê·¸ì¸ ë²„íŠ¼
    private JButton loginButton;
-   // ´ëÈ­¸í ¶óº§
+   // ëŒ€í™”ëª… ë¼ë²¨
    private JLabel label1;
-   // ´ëÈ­¸í ÀÔ·Â ÅØ½ºÆ® ÇÊµå
+   // ëŒ€í™”ëª… ì…ë ¥ í…ìŠ¤íŠ¸ í•„ë“œ
    private JTextField idInput;
 
-   // ·Î±×¾Æ¿ô ÆĞ³Î ±¸¼º
+   // ë¡œê·¸ì•„ì›ƒ íŒ¨ë„ êµ¬ì„±
    private JPanel logoutPanel;
-   // ´ëÈ­¸í Ãâ·Â ¶óº§
+   // ëŒ€í™”ëª… ì¶œë ¥ ë¼ë²¨
    private JLabel label2;
-   // ·Î±×¾Æ¿ô ¹öÆ°
+   // ë¡œê·¸ì•„ì›ƒ ë²„íŠ¼
    private JButton logoutButton;
 
-   // ÀÔ·Â ÆĞ³Î ±¸¼º
+   // ì…ë ¥ íŒ¨ë„ êµ¬ì„±
    private JPanel msgPanel;
-   // ¸Ş½ÃÁö ÀÔ·Â ÅØ½ºÆ® ÇÊµå
+   // ë©”ì‹œì§€ ì…ë ¥ í…ìŠ¤íŠ¸ í•„ë“œ
    private JTextField msgInput;
-   // Á¾·á ¹öÆ°
+   // ì¢…ë£Œ ë²„íŠ¼
    private JButton exitButton;
 
-   // ¸ŞÀÎ À©µµ¿ì
+   // ë©”ì¸ ìœˆë„ìš°
    private JFrame jframe;
-   // Ã¤ÆÃ ³»¿ë Ãâ·Â Ã¢
+   // ì±„íŒ… ë‚´ìš© ì¶œë ¥ ì°½
    private JTextArea msgOut;
 
-   // Ä«µå ·¹ÀÌ¾Æ¿ô °ü·Ã
+   // ì¹´ë“œ ë ˆì´ì•„ì›ƒ ê´€ë ¨
    private Container tab;
    private CardLayout clayout;
    private Thread thread;
 
-   // »óÅÂ ÇÃ·¡±×
+   // ìƒíƒœ í”Œë˜ê·¸
    boolean status;
 
    public MultiChatClient(String ip) {
       this.ip = ip;
 
-      // ·Î±×ÀÎ ÆĞ³Î ±¸¼º
+      // ë¡œê·¸ì¸ íŒ¨ë„ êµ¬ì„±
       loginPanel = new JPanel( );
-      // ·¹ÀÌ¾Æ¿ô ¼³Á¤
+      // ë ˆì´ì•„ì›ƒ ì„¤ì •
       loginPanel.setLayout(new BorderLayout( ));
       idInput = new JTextField(15);
-      loginButton = new JButton("·Î±×ÀÎ");
-      // ÀÌº¥Æ® ¸®½º³Ê µî·Ï
+      loginButton = new JButton("ë¡œê·¸ì¸");
+      // ì´ë²¤íŠ¸ ë¦¬ìŠ¤ë„ˆ ë“±ë¡
       loginButton.addActionListener(this);
-      label1 = new JLabel("´ëÈ­¸í");
-      // ÆĞ³Î¿¡ À§Á¬ ±¸¼º
+      label1 = new JLabel("ëŒ€í™”ëª…");
+      // íŒ¨ë„ì— ìœ„ì ¯ êµ¬ì„±
       loginPanel.add(label1, BorderLayout.WEST);
       loginPanel.add(idInput, BorderLayout.CENTER);
       loginPanel.add(loginButton, BorderLayout.EAST);
 
-      // ·Î±×¾Æ¿ô ÆĞ³Î ±¸¼º
+      // ë¡œê·¸ì•„ì›ƒ íŒ¨ë„ êµ¬ì„±
       logoutPanel = new JPanel( );
-      // ·¹ÀÌ¾Æ¿ô ¼³Á¤
+      // ë ˆì´ì•„ì›ƒ ì„¤ì •
       logoutPanel.setLayout(new BorderLayout( ));
       label2 = new JLabel( );
-      logoutButton = new JButton("·Î±×¾Æ¿ô");
-      // ÀÌº¥Æ® ¸®½º³Ê µî·Ï
+      logoutButton = new JButton("ë¡œê·¸ì•„ì›ƒ");
+      // ì´ë²¤íŠ¸ ë¦¬ìŠ¤ë„ˆ ë“±ë¡
       logoutButton.addActionListener(this);
-      // ÆĞ³Î¿¡ À§Á¬ ±¸¼º
+      // íŒ¨ë„ì— ìœ„ì ¯ êµ¬ì„±
       logoutPanel.add(label2, BorderLayout.CENTER);
       logoutPanel.add(logoutButton, BorderLayout.EAST);
 
-      // ÀÔ·Â ÆĞ³Î ±¸¼º
+      // ì…ë ¥ íŒ¨ë„ êµ¬ì„±
       msgPanel = new JPanel( );
-      // ·¹ÀÌ¾Æ¿ô ¼³Á¤
+      // ë ˆì´ì•„ì›ƒ ì„¤ì •
       msgPanel.setLayout(new BorderLayout( ));
       msgInput = new JTextField(30);
-      // ÀÌº¥Æ® ¸®½º³Ê µî·Ï
+      // ì´ë²¤íŠ¸ ë¦¬ìŠ¤ë„ˆ ë“±ë¡
       msgInput.addActionListener(this);
-      exitButton = new JButton("Á¾·á");
+      exitButton = new JButton("ì¢…ë£Œ");
       exitButton.addActionListener(this);
-      // ÆĞ³Î¿¡ À§Á¬ ±¸¼º
+      // íŒ¨ë„ì— ìœ„ì ¯ êµ¬ì„±
       msgPanel.add(msgInput, BorderLayout.CENTER);
       msgPanel.add(exitButton, BorderLayout.EAST);
 
-      // ·Î±×ÀÎ/·Î±×¾Æ¿ô ÆĞ³Î ¼±ÅÃÀ» À§ÇÑ Ä«µå ·¹ÀÌ¾Æ¿ô ÆĞ³Î
+      // ë¡œê·¸ì¸/ë¡œê·¸ì•„ì›ƒ íŒ¨ë„ ì„ íƒì„ ìœ„í•œ ì¹´ë“œ ë ˆì´ì•„ì›ƒ íŒ¨ë„
       tab = new JPanel( );
       clayout = new CardLayout( );
       tab.setLayout(clayout);
       tab.add(loginPanel, "login");
       tab.add(logoutPanel, "logout");
-      // ¸ŞÀÎ ÇÁ·¹ÀÓ ±¸¼º
-      jframe = new JFrame("::¸ÖÆ¼Ãª::");
+      // ë©”ì¸ í”„ë ˆì„ êµ¬ì„±
+      jframe = new JFrame("::ë©€í‹°ì±—::");
       msgOut = new JTextArea(" ", 10, 30);
-      // JTextAreaÀÇ ³»¿ëÀ» ¼öÁ¤ÇÏÁö ¸øÇÏ°Ô ÇÔ. Áï, Ãâ·Â Àü¿ëÀ¸·Î »ç¿ë
+      // JTextAreaì˜ ë‚´ìš©ì„ ìˆ˜ì •í•˜ì§€ ëª»í•˜ê²Œ í•¨. ì¦‰, ì¶œë ¥ ì „ìš©ìœ¼ë¡œ ì‚¬ìš©
       msgOut.setEditable(false);
-      // ¼öÁ÷½ºÅ©·Ñ¹Ù´Â Ç×»ó ³ªÅ¸³»°í, ¼öÆò½ºÅ©·Ñ¹Ù´Â ÇÊ¿äÇÒ ¶§¸¸ ³ªÅ¸³ª°Ô ÇÔ
+      // ìˆ˜ì§ìŠ¤í¬ë¡¤ë°”ëŠ” í•­ìƒ ë‚˜íƒ€ë‚´ê³ , ìˆ˜í‰ìŠ¤í¬ë¡¤ë°”ëŠ” í•„ìš”í•  ë•Œë§Œ ë‚˜íƒ€ë‚˜ê²Œ í•¨
       JScrollPane jsp = new JScrollPane(msgOut,
                  JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
                  JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
       jframe.add(tab, BorderLayout.NORTH);
       jframe.add(jsp, BorderLayout.CENTER);
       jframe.add(msgPanel, BorderLayout.SOUTH);
-      // ·Î±×ÀÎ ÆĞ³ÎÀ» ¿ì¼± Ç¥½Ã
+      // ë¡œê·¸ì¸ íŒ¨ë„ì„ ìš°ì„  í‘œì‹œ
       clayout.show(tab, "login");
-      // ÇÁ·¹ÀÓ Å©±â ÀÚµ¿ ¼³Á¤
+      // í”„ë ˆì„ í¬ê¸° ìë™ ì„¤ì •
       jframe.pack( );
-      // ÇÁ·¹ÀÓ Å©±â Á¶Á¤ ºÒ°¡ ¼³Á¤
+      // í”„ë ˆì„ í¬ê¸° ì¡°ì • ë¶ˆê°€ ì„¤ì •
       jframe.setResizable(false);
-      // ÇÁ·¹ÀÓ Ç¥½Ã
+      // í”„ë ˆì„ í‘œì‹œ
       jframe.setVisible(true);
 
    }
 
    public void connectServer( ) {
       try {
-         // ¼ÒÄÏ »ı¼º
+         // ì†Œì¼“ ìƒì„±
          socket = new Socket(ip, 8888);
-         System.out.println("[Client]Server ¿¬°á ¼º°ø!!");
+         System.out.println("[Client]Server ì—°ê²° ì„±ê³µ!!");
 
-         // ÀÔ¡¤Ãâ·Â ½ºÆ®¸² »ı¼º
+         // ì…Â·ì¶œë ¥ ìŠ¤íŠ¸ë¦¼ ìƒì„±
          inMsg = new BufferedReader
                 (new InputStreamReader(socket.getInputStream( )));
          outMsg = new PrintWriter(socket.getOutputStream( ), true);
 
-         // ¼­¹ö¿¡ ·Î±×ÀÎ ¸Ş½ÃÁö Àü´Ş
+         // ì„œë²„ì— ë¡œê·¸ì¸ ë©”ì‹œì§€ ì „ë‹¬
          outMsg.println(id + "/" + "login");
 
-         // ¸Ş½ÃÁö ¼ö½ÅÀ» À§ÇÑ ½º·¹µå »ı¼º
+         // ë©”ì‹œì§€ ìˆ˜ì‹ ì„ ìœ„í•œ ìŠ¤ë ˆë“œ ìƒì„±
          thread = new Thread(this);
          thread.start( );
       } catch(Exception e) {
          // e.printStackTrace( );
-        System.out.println("[MultiChatClient]connectServer( )Exp¹ß»ı!");
+        System.out.println("[MultiChatClient]connectServer( )Expë°œìƒ!");
       }
    }
 
-   // ÀÌº¥Æ® Ã³¸®
+   // ì´ë²¤íŠ¸ ì²˜ë¦¬
    public void actionPerformed(ActionEvent arg0) {
       Object obj = arg0.getSource( );
 
-      // Á¾·á ¹öÆ° Ã³¸®
+      // ì¢…ë£Œ ë²„íŠ¼ ì²˜ë¦¬
       if(obj == exitButton) {
          System.exit(0);
       } else if(obj == loginButton) {
          id = idInput.getText( );
-         label2.setText("´ëÈ­¸í : " + id);
+         label2.setText("ëŒ€í™”ëª… : " + id);
          clayout.show(tab, "logout");
          connectServer( );
       } else if(obj == logoutButton) {
-         // ·Î±×¾Æ¿ô ¸Ş½ÃÁö Àü¼Û
+         // ë¡œê·¸ì•„ì›ƒ ë©”ì‹œì§€ ì „ì†¡
          outMsg.println(id + "/" + "logout");
-         // ´ëÈ­ Ã¢ Å¬¸®¾î
+         // ëŒ€í™” ì°½ í´ë¦¬ì–´
          msgOut.setText(" ");
-         // ·Î±×ÀÎ ÆĞ³Î·Î ÀüÈ¯
+         // ë¡œê·¸ì¸ íŒ¨ë„ë¡œ ì „í™˜
          clayout.show(tab, "login");
          outMsg.close( );
          try {
@@ -184,36 +184,36 @@ public class MultiChatClient implements ActionListener, Runnable {
 
          status = false;
       } else if(obj == msgInput) {
-         // ¸Ş½ÃÁö Àü¼Û
+         // ë©”ì‹œì§€ ì „ì†¡
          outMsg.println(id + "/" + msgInput.getText( ));
-         // ÀÔ·Â Ã¢ Å¬¸®¾î
+         // ì…ë ¥ ì°½ í´ë¦¬ì–´
          msgInput.setText(" ");
       }
    }
 
    public void run( ) {
-      // ¼ö½Å ¸Ş½ÃÁö¸¦ Ã³¸®ÇÏ´Â º¯¼ö
+      // ìˆ˜ì‹  ë©”ì‹œì§€ë¥¼ ì²˜ë¦¬í•˜ëŠ” ë³€ìˆ˜
       String msg;
       String[ ] rmsg;
 
       status = true;
       while(status) {
          try {
-            // ¸Ş½ÃÁö ¼ö½Å°ú ÆÄ½Ì
+            // ë©”ì‹œì§€ ìˆ˜ì‹ ê³¼ íŒŒì‹±
             msg = inMsg.readLine( );
             rmsg = msg.split("/");
 
-            // JTextArea¿¡ ¼ö½ÅµÈ ¸Ş½ÃÁö Ãß°¡
+            // JTextAreaì— ìˆ˜ì‹ ëœ ë©”ì‹œì§€ ì¶”ê°€
             msgOut.append(rmsg[0] + ">" + rmsg[1] + "\n");
 
-            // Ä¿¼­¸¦ ÇöÀç ´ëÈ­ ¸Ş½ÃÁö¿¡ Ç¥½Ã
+            // ì»¤ì„œë¥¼ í˜„ì¬ ëŒ€í™” ë©”ì‹œì§€ì— í‘œì‹œ
             msgOut.setCaretPosition(msgOut.getDocument( ).getLength( ));
          } catch(IOException e) {
             // e.printStackTrace( );
             status = false;
          }
       }
-      System.out.println("[MultiChatClient]" + thread.getName( ) + "Á¾·áµÊ");
+      System.out.println("[MultiChatClient]" + thread.getName( ) + "ì¢…ë£Œë¨");
    }
 
    public static void main(String[ ] args) {
